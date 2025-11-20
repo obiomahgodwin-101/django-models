@@ -1,25 +1,26 @@
 from .models import Author, Book, Library, Librarian
 
-# 1️⃣ Query all books by a specific author
 def books_by_author(author_name):
-    """
-    Returns a queryset of all books written by the given author.
-    """
-    return Book.objects.filter(author__name=author_name)
+    """Query all books by a specific author."""
+    try:
+        author = Author.objects.get(name=author_name)
+        return Book.objects.filter(author=author)
+    except Author.DoesNotExist:
+        return []
 
-# 2️⃣ List all books in a library
 def books_in_library(library_name):
-    """
-    Returns a queryset of all books in the specified library.
-    """
-    library = Library.objects.get(name=library_name)
-    return library.books.all()
+    """List all books in a library."""
+    try:
+        library = Library.objects.get(name=library_name)
+        return library.books.all()
+    except Library.DoesNotExist:
+        return []
 
-# 3️⃣ Retrieve the librarian for a library
 def librarian_for_library(library_name):
-    """
-    Returns the librarian object for the given library.
-    """
-    library = Library.objects.get(name=library_name)
-    return library.librarian
+    """Retrieve the librarian for a library."""
+    try:
+        library = Library.objects.get(name=library_name)
+        return Librarian.objects.get(library=library)
+    except (Library.DoesNotExist, Librarian.DoesNotExist):
+        return None
 
