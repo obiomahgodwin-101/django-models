@@ -1,0 +1,9 @@
+<h1>Welcome to the Relationship App</h1>
+
+{% if user %}
+<p>Hello, {{ user.username }}! | <a href="{% url 'logout' %}">Logout</a></p>
+<p><a href="{% url 'list_books' %}">View Books</a> | <a href="{% url 'list_authors' %}">View Authors</a></p>
+{% else %}
+<p><a href="{% url 'login' %}">Login</a> | <a href="{% url 'register' %}">Register</a></p>
+{% endif %}
+
